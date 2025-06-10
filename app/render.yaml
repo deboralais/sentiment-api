@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: sentiment-api
+    env: python
+    buildCommand: pip install -r backend/requirements.txt
+    startCommand: ./start.sh
+    plan: free
+    envVars:
+      - key: TRANSFORMERS_CACHE
+        value: /tmp/cache
+    autoDeploy: true
+
+  - type: web
+    name: sentiment-front
+    env: static
+    buildCommand: cd frontend && npm install && npm run build
+    staticPublishPath: frontend/dist
+    plan: free
